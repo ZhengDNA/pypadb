@@ -1,0 +1,3 @@
+class PoolUninitializedException(Exception):
+    pass
+
