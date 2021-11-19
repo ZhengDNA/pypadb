@@ -14,17 +14,16 @@ class Configurer():
         "maxusage": None,
         "setsession": [],
         "ping": 0,
-        "closeable": False,
-        "threadlocal": None,
         "host": "127.0.0.1",
+        "port": 3306,
         "user": "root",
-        "password": "",
+        "password": "123456",
         "database": "test",
         "charset": "utf8",
     }
 
     def end(self) -> None:
-        connection_pool.init_pool(self.__data)
+        connection_pool._init_pool(self.__data)
 
     def set_creator(self, creator) -> 'Configurer':
         self.__data['creator'] = creator
@@ -34,54 +33,50 @@ class Configurer():
         self.__data['maxconnections'] = maxconnections
         return self
 
-    def set_(self) -> 'Configurer':
-        self.__data[''] =
+    def set_mincached(self, mincached: int) -> 'Configurer':
+        self.__data['mincached'] = mincached
         return self
 
-    def set_(self) -> 'Configurer':
-        self.__data[''] =
+    def set_maxcached(self, maxcached: int) -> 'Configurer':
+        self.__data['maxcached'] = maxcached
         return self
 
-    def set_(self) -> 'Configurer':
-        self.__data[''] =
+    def set_maxshared(self, maxshared: int) -> 'Configurer':
+        self.__data['maxshared'] = maxshared
         return self
 
-    def set_(self) -> 'Configurer':
-        self.__data[''] =
+    def set_blocking(self, blocking: bool) -> 'Configurer':
+        self.__data['blocking'] = blocking
         return self
 
     def set_maxusage(self, maxusage: int) -> 'Configurer':
         self.__data['creator'] = maxusage
         return self
 
-    def set_setsession(self, setsession: list) -> 'Configurer':
+    def set_setsession(self, setsession: list[str]) -> 'Configurer':
         self.__data['setsession'] = setsession
         return self
 
-    def set_(self) -> 'Configurer':
-        self.__data[''] =
+    def set_host(self, host: str) -> 'Configurer':
+        self.__data['host'] = host
         return self
 
-    def set_(self) -> 'Configurer':
-        self.__data[''] =
+    def set_port(self, port: int) -> 'Configurer':
+        self.__data['port'] = port
         return self
 
-    def set_(self) -> 'Configurer':
-        self.__data[''] =
+    def set_user(self, user: str) -> 'Configurer':
+        self.__data['user'] = user
         return self
 
-    def set_(self) -> 'Configurer':
-        self.__data[''] =
+    def set_password(self, password: str) -> 'Configurer':
+        self.__data['password'] = password
         return self
 
-    def set_(self) -> 'Configurer':
-        self.__data[''] =
+    def set_database(self, database: str) -> 'Configurer':
+        self.__data['database'] = database
         return self
 
-    def set_(self) -> 'Configurer':
-        self.__data[''] =
-        return self
-
-    def set_(self) -> 'Configurer':
-        self.__data[''] =
+    def set_charset(self, charset: str) -> 'Configurer':
+        self.__data['charset'] = charset
         return self
