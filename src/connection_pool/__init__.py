@@ -1,14 +1,18 @@
-import pymysql
-from dbutils.pooled_db import PooledDB
+from typing import Union
 
-import configurer
+from dbutils.pooled_db import PooledDB, PooledDedicatedDBConnection, PooledSharedDBConnection
 
-POOL = None
+import exception
+
+_POOL: PooledDB = None
 
 
-def init_pool(data: dict):
-    global POOL
-    POOL = PooledDB(
-        creator=pymysql,
+def _init_pool(data: dict):
+    global _POOL
+    _POOL = PooledDB(**data)
 
-    )
+
+def get_connection() -> Union[PooledSharedDBConnection, PooledDedicatedDBConnection]:
+    if not _POOL:
+        raise exception.PoolUninitializedException('connection pool uninitialized')
+    return _POOL.connection()
