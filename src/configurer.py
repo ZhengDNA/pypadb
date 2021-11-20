@@ -20,10 +20,11 @@ class Configurer():
         "password": "123456",
         "database": "test",
         "charset": "utf8",
+        "cursor": pymysql.cursors.DictCursor
     }
 
     def end(self) -> None:
-        connection_pool._init_pool(self.__data)
+        connection_pool._init_pool(**self.__data)
 
     def set_creator(self, creator) -> 'Configurer':
         self.__data['creator'] = creator
@@ -79,4 +80,8 @@ class Configurer():
 
     def set_charset(self, charset: str) -> 'Configurer':
         self.__data['charset'] = charset
+        return self
+
+    def set_cursor(self, cursor) -> 'Configurer':
+        self.__data['cursor'] = cursor
         return self
