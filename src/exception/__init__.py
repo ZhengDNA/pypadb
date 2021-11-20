@@ -4,3 +4,7 @@ class PoolUninitializedException(Exception):
 
 class ArgNotCallable(Exception):
     pass
+
+
+class RequireReturnTypeAnnotation(Exception):
+    pass
