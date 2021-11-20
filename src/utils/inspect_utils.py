@@ -7,7 +7,6 @@ from exception import ArgNotCallable
 
 
 class Argument(BaseModel):
-    __slots__ = ('name', 'type', 'default')
     name: str
     type: Optional[type]
     default: Any
@@ -22,6 +21,6 @@ def arg_list(fun) -> list[Argument]:
             for tp in inspect.signature(fun).parameters.items()]
 
 
-def returns_val(fun) -> type:
+def returns_type(fun) -> type:
     a = inspect.signature(fun).return_annotation
     return a if a != inspect._empty else None
