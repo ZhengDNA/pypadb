@@ -1,6 +1,8 @@
 ## elegant_db
 
 ### Usage
+
+#### select
 ```python
 from pydantic import BaseModel
 
