@@ -1,5 +1,7 @@
 ## elegant_db
 
+对 Mybatis 的拙劣模仿
+
 ### Usage
 
 #### select
