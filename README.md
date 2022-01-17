@@ -37,10 +37,10 @@ if __name__ == '__main__':
     .set_database('test')
     .end()
 
-print(get_sth_many())
-# [User(...), User(...), ...]
-print(get_sth_one(1))
-# id=1 account='...'
+    print(get_sth_many())
+    # [User(...), User(...), ...]
+    print(get_sth_one(1))
+    # id=1 account='123456'
 ```
 
 另一种方法
@@ -72,6 +72,8 @@ if __name__ == '__main__':
         user=User,
         stuff=Stuff
     )
-    print(tables.user.select_one(account='123456'))
+    print(tables.user.select_one(id='1'))
+    # id=1 account='123456'
     print(tables.stuff.select_one(name='asdf'))
+    # name='asdf' count=123
 ```
