@@ -32,12 +32,12 @@ def get_sth_one(id: int) -> User:
 
 if __name__ == '__main__':
     # end() must be called
-    DbConfigurer()
-    .set_host('localhost')
-    .set_user('root')
-    .set_password('123456')
-    .set_database('test')
-    .end()
+    DbConfigurer() \
+        .set_host('localhost') \
+        .set_user('root') \
+        .set_password('123456') \
+        .set_database('test') \
+        .end()
 
     print(get_sth_many())
     # [User(...), User(...), ...]
