@@ -2,6 +2,8 @@
 
 对 Mybatis 的拙劣模仿
 
+目前只支持了 MySQL
+
 ### Usage
 
 #### select
