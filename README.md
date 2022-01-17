@@ -50,7 +50,7 @@ if __name__ == '__main__':
 ```python
 from pydantic import BaseModel
 
-from conf import db_configurer, TableConfigurer
+from conf import db_configurer, tables
 
 
 class User(BaseModel):
@@ -70,11 +70,8 @@ if __name__ == '__main__':
         .set_password('123456') \
         .set_database('test') \
         .end()
-    tables = TableConfigurer(
-        user=User,
-        stuff=Stuff
-    )
-    print(tables.user.select_one(id='1'))
+    tables.init_tables(user=User, stuff=Stuff)
+    print(tables.user.select_one(account='123456', id='1'))
     # id=1 account='123456'
     print(tables.stuff.select_one(name='asdf'))
     # name='asdf' count=123

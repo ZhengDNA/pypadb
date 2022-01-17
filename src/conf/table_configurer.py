@@ -8,8 +8,9 @@ class TableConfigurer:
 
     def __init__(self, **kwargs):
         self.tables = []
-        for key in kwargs:
-            self.tables.append(BaseTable(key, kwargs.get(key)))
+        if kwargs:
+            for key in kwargs:
+                self.tables.append(BaseTable(key, kwargs.get(key)))
 
     def __getattr__(self, item: str) -> BaseTable:
         return self[item]
@@ -22,3 +23,12 @@ class TableConfigurer:
                 if table.name == item:
                     return table
         return None
+
+    def init_tables(self, **kwargs):
+        self.tables = []
+        if kwargs:
+            for key in kwargs:
+                self.tables.append(BaseTable(key, kwargs.get(key)))
+
+
+tables: TableConfigurer = TableConfigurer()
