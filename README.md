@@ -5,10 +5,11 @@
 ### Usage
 
 #### select
+
 ```python
 from pydantic import BaseModel
 
-from configurer import Configurer
+from conf.db_configurer import DbConfigurer
 from decorator import select
 
 
@@ -29,16 +30,16 @@ def get_sth_one(id: int) -> User:
 
 if __name__ == '__main__':
     # end() must be called
-    Configurer() \
-        .set_host('localhost') \
-        .set_user('root') \
-        .set_password('123456') \
-        .set_database('test') \
-        .end()
+    DbConfigurer()
+    .set_host('localhost')
+    .set_user('root')
+    .set_password('123456')
+    .set_database('test')
+    .end()
 
-    print(get_sth_many())
-    # [User(...), User(...), ...]
-    print(get_sth_one(1))
-    # id=1 account='...'
+print(get_sth_many())
+# [User(...), User(...), ...]
+print(get_sth_one(1))
+# id=1 account='...'
 
 ```
