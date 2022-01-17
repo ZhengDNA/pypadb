@@ -23,5 +23,5 @@ class BaseTable:
         if kwargs:
             sql += 'where '
             for key in kwargs:
-                sql += f'{key}=%({key})s,'
-        return sql.rstrip(',')
+                sql += f'{key}=%({key})s and '
+        return sql.rstrip('and ')
