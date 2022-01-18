@@ -24,10 +24,14 @@ def select(sql: str, data_type: Any) -> Callable:
                 if not func_returns:
                     raise RequireReturnTypeAnnotation('require return type annotation')
 
+                first_data = cur.fetchone()
+                if first_data is None:
+                    return None
+
                 if func_returns == GenericAlias(list, data_type):
-                    return [data_type(**i) for i in cur.fetchall()]
+                    return [data_type(**first_data), *[data_type(**i) for i in cur.fetchall()]]
                 else:
-                    return data_type(**cur.fetchone())
+                    return data_type(**first_data)
             finally:
                 cur.close()
                 conn.close()
