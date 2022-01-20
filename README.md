@@ -1,4 +1,4 @@
-## elegant_db
+## pypa
 
 对 Mybatis 的拙劣模仿
 
