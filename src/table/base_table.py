@@ -1,6 +1,7 @@
 from typing import Any
 
-from utils import query
+from utils.conditions import Limit, Like
+from utils.query_util import query
 
 
 class BaseTable:
@@ -15,13 +16,14 @@ class BaseTable:
     def select_one(self, **kwargs):
         return query(self.__parse_sql(kwargs), kwargs, self.data_type, 'one')
 
-    def select_many(self, **kwargs) -> list:
-        return query(self.__parse_sql(kwargs), kwargs, self.data_type, 'many')
+    def select_many(self, conditions: dict = {}, limit: Limit = None) -> list:
+        return query(self.__parse_sql(conditions, limit), conditions, self.data_type, 'many')
 
-    def __parse_sql(self, kwargs: dict) -> str:
-        sql: str = f'select * from {self.name} '
-        if kwargs:
-            sql += 'where '
-            for key in kwargs:
-                sql += f'{key}=%({key})s and '
-        return sql.rstrip('and ')
+    def __parse_sql(self, conditions: dict, limit: Limit) -> str:
+        sql: str = f'select * from {self.name}'
+        if conditions:
+            sql += ' where'
+            for key in conditions:
+                sql += f' {key}=%({key})s and'
+        sql = sql.rstrip(' and')
+        return sql + str(limit) if limit else sql
