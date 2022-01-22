@@ -6,6 +6,10 @@
 
 使用了 pydantic，预计还会用 SQLAlchemy，学习中。
 
+### install
+
+`pip install db-pypa`
+
 ### Usage
 
 #### select
