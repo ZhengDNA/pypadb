@@ -1,1 +1,1 @@
-from table.base_table import *
+from table import base_table

@@ -1,2 +1,2 @@
-from conf.db_configurer import *
-from conf.table_configurer import *
+from conf import db_configurer
+from conf import table_configurer
