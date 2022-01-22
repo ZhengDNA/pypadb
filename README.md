@@ -8,7 +8,7 @@
 
 ### install
 
-`pip install db-pypa`
+`pip install pypadb`
 
 ### Usage
 
