@@ -1,4 +1,4 @@
-## pypa
+## pypadb
 
 对 Mybatis 的拙劣模仿
 
