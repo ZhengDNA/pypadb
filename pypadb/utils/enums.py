@@ -7,6 +7,6 @@ class LikeEnum(Enum):
     ALL_Like = 3
 
 
-class QueryMode(Enum):
+class QueryModeEnum(Enum):
     One = 1
     Many = 2

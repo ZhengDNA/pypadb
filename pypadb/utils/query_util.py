@@ -1,10 +1,10 @@
 from typing import Any
 
 import connection_pool
-from utils.enums import QueryMode
+from utils.enums import QueryModeEnum
 
 
-def query(sql: str, kwargs: dict, data_type: Any, model: QueryMode):
+def query(sql: str, kwargs: dict, data_type: Any, model: QueryModeEnum):
     conn: Any
     cur: Any
     try:
@@ -16,9 +16,9 @@ def query(sql: str, kwargs: dict, data_type: Any, model: QueryMode):
         if first_data is None:
             return None
 
-        if model == QueryMode.One:
+        if model == QueryModeEnum.One:
             return data_type(**first_data)
-        elif model == QueryMode.Many:
+        elif model == QueryModeEnum.Many:
             return [data_type(**first_data), *[data_type(**i) for i in cur.fetchall()]]
     finally:
         conn.close()
