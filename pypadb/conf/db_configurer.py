@@ -9,7 +9,6 @@ class DbConfigurer():
         "maxconnections": 6,
         "mincached": 2,
         "maxcached": 5,
-        "maxshared": 3,
         "blocking": True,
         "maxusage": None,
         "setsession": [],
@@ -40,10 +39,6 @@ class DbConfigurer():
 
     def set_maxcached(self, maxcached: int) -> 'DbConfigurer':
         self.__data['maxcached'] = maxcached
-        return self
-
-    def set_maxshared(self, maxshared: int) -> 'DbConfigurer':
-        self.__data['maxshared'] = maxshared
         return self
 
     def set_blocking(self, blocking: bool) -> 'DbConfigurer':
