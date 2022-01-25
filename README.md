@@ -6,6 +6,8 @@
 
 使用了 pydantic，预计还会用 SQLAlchemy，学习中。
 
+[文档](https://chenzdna.github.io/tag/pypadb/)
+
 ### install
 
 `pip install pypadb`
