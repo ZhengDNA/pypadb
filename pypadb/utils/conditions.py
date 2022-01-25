@@ -42,35 +42,21 @@ class Like:
         return self.sql
 
 
-class Extra(metaclass=abc.ABCMeta):
-    __slots__ = ['column', 'data_property', 'method', 'mode']
-
-    column: str
-    data_property: str
-    method: Any
-    mode: QueryModeEnum
-
-
-def extra(_column: list, _data_property: str, _method):
+def extra(column: list, data_property: str, method):
     """
-    :param _column: table A[column[0]] mapping table B[column[1]]
-    :param _data_property: table A property name
-    :param _method: query method
+    :param column: table A[column[0]] mapping table B[column[1]]
+    :param data_property: table A property name
+    :param method: query method
     """
 
-    class E(Extra):
-        column = _column
-        data_property = _data_property
-        method = _method
-
-        def __new__(cls, data_entity):
-            if isinstance(data_entity, list):
-                for entity in data_entity:
-                    entity.__setattr__(cls.data_property,
-                                       cls.method(**{cls.column[1]: data_entity.__getattribute__(cls.column[0])}))
-                return data_entity
-            data_entity.__setattr__(cls.data_property,
-                                    cls.method(**{cls.column[1]: data_entity.__getattribute__(cls.column[0])}))
+    def e(data_entity):
+        if isinstance(data_entity, list):
+            for entity in data_entity:
+                entity.__setattr__(data_property,
+                                   method(**{column[1]: data_entity.__getattribute__(column[0])}))
             return data_entity
+        data_entity.__setattr__(data_property,
+                                method(**{column[1]: data_entity.__getattribute__(column[0])}))
+        return data_entity
 
-    return E
+    return e

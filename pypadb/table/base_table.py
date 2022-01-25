@@ -1,6 +1,6 @@
 from typing import Any, Union
 
-from utils.conditions import Limit, Like, Extra
+from utils.conditions import Limit, Like
 from utils.enums import QueryModeEnum
 from utils.query_util import query
 
@@ -17,18 +17,18 @@ class BaseTable:
         self.data_type = data_type
         self.base_select_sql = f'select * from {name}'
 
-    def select_one(self, extra: Extra = None, **kwargs):
+    def select_one(self, extra=None, **kwargs):
         res = query(self.__parse_sql(kwargs), kwargs, self.data_type, QueryModeEnum.One)
         return extra(res) if extra else res
 
-    def select_many(self, limit: Limit = None, extra: Extra = None, **kwargs) -> list:
+    def select_many(self, limit: Limit = None, extra=None, **kwargs) -> list:
         res = query(self.__parse_sql(kwargs, limit), kwargs, self.data_type, QueryModeEnum.Many)
         return extra(res) if extra else res
 
     def select_like(self,
                     likes: Union[list[Like], Like] = {},
                     limit: Limit = None,
-                    extra: Extra = None) -> list:
+                    extra=None) -> list:
         sql: str = self.base_select_sql
         data_dict: dict = {}
         if likes:
