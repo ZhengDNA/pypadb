@@ -98,3 +98,5 @@ if __name__ == '__main__':
     # argument likes: Union[list[Like], Like]
     # print result [User(id=1, account='123456'), User(id=2, account='123454563466')]
 ```
+
+更多使用方法见文档
