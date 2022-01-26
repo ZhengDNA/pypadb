@@ -52,9 +52,7 @@ if __name__ == '__main__':
     print(get_sth_one(1))
     # id=1 account='...'
 ```
-
 另一种方法
-
 ```python
 from pydantic import BaseModel
 
