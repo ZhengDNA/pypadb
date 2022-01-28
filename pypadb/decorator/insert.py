@@ -30,7 +30,6 @@ def insert(sql: str) -> Callable:
                     in_sql += f'%({item}{i})s,'
                 in_sql = in_sql.rstrip(',') + '),'
 
-            print(in_sql)
             _, row_id = execute(in_sql.rstrip(','), query_dict)
             return row_id
 
