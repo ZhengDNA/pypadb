@@ -1,7 +1,6 @@
 import functools
 from typing import Callable
 
-from utils import inspect_util
 from utils.query_util import execute
 
 
