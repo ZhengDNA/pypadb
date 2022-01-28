@@ -27,11 +27,11 @@ class BaseTable:
         self.base_select_sql = f'select * from {name}'
 
     def select_one(self, extra=None, **kwargs):
-        res = query(parse_sql(self.base_select_sql, kwargs), kwargs, self.data_type, QueryModeEnum.One)
+        res, _ = query(parse_sql(self.base_select_sql, kwargs), kwargs, self.data_type, QueryModeEnum.One)
         return extra(res) if extra else res
 
     def select_many(self, limit: Limit = None, extra=None, **kwargs) -> list:
-        res = query(parse_sql(self.base_select_sql, kwargs, limit), kwargs, self.data_type, QueryModeEnum.Many)
+        res, _ = query(parse_sql(self.base_select_sql, kwargs, limit), kwargs, self.data_type, QueryModeEnum.Many)
         return extra(res) if extra else res
 
     def select_like(self,
@@ -50,7 +50,7 @@ class BaseTable:
             else:
                 sql += str(likes)
                 data_dict[likes.column] = likes.value
-        res = query(sql + str(limit) if limit else sql, data_dict, self.data_type, QueryModeEnum.Many)
+        res, _ = query(sql + str(limit) if limit else sql, data_dict, self.data_type, QueryModeEnum.Many)
         return extra(res) if extra else res
 
     def update(self, entity, **kwargs):
@@ -65,7 +65,8 @@ class BaseTable:
                     sql += f' {key}=%({key})s,'
             sql = sql.rstrip(',')
         sql = parse_sql(sql, kwargs)
-        return execute(sql, {**data_dict, **kwargs})
+        _, row_id = execute(sql, {**data_dict, **kwargs})
+        return row_id
 
     def delete(self, **kwargs):
         if not kwargs:
@@ -74,7 +75,7 @@ class BaseTable:
         sql = parse_sql(sql, kwargs)
         return execute(sql, kwargs)
 
-    def insert(self, data):
+    def insert(self, data) -> int:
         sql = f'insert into {self.name}('
         tmp = '('
         data_dict: dict = data.dict()
@@ -84,9 +85,10 @@ class BaseTable:
                 tmp += f'%({key})s, '
         tmp = tmp.rstrip(', ') + ')'
         sql = sql.rstrip(', ') + ') value' + tmp
-        return execute(sql, data_dict)
+        _, row_id = execute(sql, data_dict)
+        return row_id
 
-    def insert_batch(self, data: list):
+    def insert_batch(self, data: list) -> int:
         sql = f'insert into {self.name}('
         data_dict: dict = data[0].dict()
         for key in data_dict:
@@ -103,4 +105,5 @@ class BaseTable:
             sql = sql.rstrip(', ') + '), '
         sql = sql.rstrip(', ')
         print(sql, data_dict)
-        return execute(sql, data_dict)
+        _, row_id = execute(sql, data_dict)
+        return row_id

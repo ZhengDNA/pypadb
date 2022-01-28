@@ -2,8 +2,6 @@ import functools
 from types import GenericAlias
 from typing import Callable, Any
 
-import pymysql.cursors
-
 import connection_pool
 from exception import RequireReturnTypeAnnotation
 from utils import inspect_util
@@ -12,7 +10,7 @@ from utils import inspect_util
 def select(sql: str, data_type: Any) -> Callable:
     def deco(fun: Callable):
         @functools.wraps(fun)
-        def wrapper(*args, **kwargs):
+        def wrapper(*args):
             cur: Any
             conn: Any
             try:
@@ -33,6 +31,7 @@ def select(sql: str, data_type: Any) -> Callable:
                 else:
                     return data_type(**first_data)
             finally:
+                conn.commit()
                 cur.close()
                 conn.close()
 
