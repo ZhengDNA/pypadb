@@ -2,7 +2,7 @@ import functools
 import re
 from typing import Callable
 
-from utils.query_util import execute
+from utils.query_util import execute, parse_sql_batch
 
 
 def insert(sql: str) -> Callable:
@@ -21,16 +21,9 @@ def insert(sql: str) -> Callable:
                 _, row_id = execute(in_sql + template_sql, data.dict())
                 return row_id
 
-            query_dict: dict = {}
-            for i, v in enumerate(data):
-                data_dict: dict = v.dict()
-                query_dict = {**query_dict, **{f'{arg}{i}': data_dict.get(arg) for arg in arg_list}}
-                in_sql += '('
-                for item in arg_list:
-                    in_sql += f'%({item}{i})s,'
-                in_sql = in_sql.rstrip(',') + '),'
+            parse_res, query_dict = parse_sql_batch(arg_list, data)
 
-            _, row_id = execute(in_sql.rstrip(','), query_dict)
+            _, row_id = execute(in_sql + parse_res, query_dict)
             return row_id
 
         return wrapper

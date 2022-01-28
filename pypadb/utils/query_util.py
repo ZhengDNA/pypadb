@@ -1,5 +1,7 @@
 from typing import Any
 
+from pydantic import BaseModel
+
 import connection_pool
 from utils.enums import QueryModeEnum
 
@@ -27,3 +29,16 @@ def execute(sql: str, kwargs: dict = None, cursor_type=None) -> tuple[list, int]
         conn.commit()
         conn.close()
         cur.close()
+
+
+def parse_sql_batch(columns: list, data_list: list) -> tuple[str, dict]:
+    query_dict: dict = {}
+    query_sql: str = ''
+    for i, v in enumerate(data_list):
+        data_dict: dict = v.dict()
+        query_dict = {**query_dict, **{f'{arg}{i}': data_dict.get(arg) for arg in columns}}
+        query_sql += '('
+        for item in columns:
+            query_sql += f'%({item}{i})s,'
+        query_sql = query_sql.rstrip(',') + '),'
+    return query_sql.rstrip(','), query_dict

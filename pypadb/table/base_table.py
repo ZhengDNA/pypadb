@@ -2,7 +2,7 @@ from typing import Any, Union
 
 from utils.conditions import Limit, Like
 from utils.enums import QueryModeEnum
-from utils.query_util import query, execute
+from utils.query_util import query, execute, parse_sql_batch
 
 
 def parse_sql(sql: str, conditions: dict, limit: Limit = None) -> str:
@@ -91,19 +91,14 @@ class BaseTable:
     def insert_batch(self, data: list) -> int:
         sql = f'insert into {self.name}('
         data_dict: dict = data[0].dict()
+        columns: list = []
         for key in data_dict:
             if data_dict[key] or data_dict[key] == 0:
                 sql += f' {key}, '
+                columns.append(key)
         sql = sql.rstrip(', ') + ') values '
-        data_list_tmp: list[dict] = [i.dict() for i in data]
-        data_dict = {}
-        for i, v in enumerate(data_list_tmp):
-            sql += '('
-            for k in v:
-                data_dict[f'{k}{i}'] = v[k]
-                sql += f'%({k}{i})s, '
-            sql = sql.rstrip(', ') + '), '
-        sql = sql.rstrip(', ')
-        print(sql, data_dict)
-        _, row_id = execute(sql, data_dict)
+
+        parse_res, query_dict = parse_sql_batch(columns, data)
+
+        _, row_id = execute(sql + parse_res, query_dict)
         return row_id
