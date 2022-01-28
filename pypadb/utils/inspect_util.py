@@ -3,7 +3,7 @@ from typing import Any, Optional
 
 from pydantic import BaseModel
 
-from exception import ArgNotCallable
+from exception import NotCallable
 
 
 class Argument(BaseModel):
@@ -14,7 +14,7 @@ class Argument(BaseModel):
 
 def arg_list(fun) -> list[Argument]:
     if not callable(fun):
-        raise ArgNotCallable(fun)
+        raise NotCallable(fun)
     return [Argument(name=tp[0],
                      type=tp[1].annotation if tp[1].annotation != inspect._empty else None,
                      default=tp[1].default if tp[1].default != inspect._empty else None)

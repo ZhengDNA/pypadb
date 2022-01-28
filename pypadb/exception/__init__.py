@@ -2,7 +2,7 @@ class PoolUninitializedException(Exception):
     pass
 
 
-class ArgNotCallable(Exception):
+class NotCallable(Exception):
     pass
 
 
