@@ -2,16 +2,7 @@ from typing import Any, Union
 
 from utils.conditions import Limit, Like
 from utils.enums import QueryModeEnum
-from utils.query_util import query, execute, parse_sql_batch
-
-
-def parse_sql(sql: str, conditions: dict, limit: Limit = None) -> str:
-    if conditions:
-        sql += ' where'
-        for key in conditions:
-            sql += f' {key}=%({key})s and'
-    sql = sql.rstrip(' and')
-    return sql + str(limit) if limit else sql
+from utils.query_util import query, execute, parse_sql_batch, parse_sql_where, parse_sql_update
 
 
 class BaseTable:
@@ -27,11 +18,11 @@ class BaseTable:
         self.base_select_sql = f'select * from {name}'
 
     def select_one(self, extra=None, **kwargs):
-        res, _ = query(parse_sql(self.base_select_sql, kwargs), kwargs, self.data_type, QueryModeEnum.One)
+        res, _ = query(parse_sql_where(self.base_select_sql, kwargs), kwargs, self.data_type, QueryModeEnum.One)
         return extra(res) if extra else res
 
     def select_many(self, limit: Limit = None, extra=None, **kwargs) -> list:
-        res, _ = query(parse_sql(self.base_select_sql, kwargs, limit), kwargs, self.data_type, QueryModeEnum.Many)
+        res, _ = query(parse_sql_where(self.base_select_sql, kwargs, limit), kwargs, self.data_type, QueryModeEnum.Many)
         return extra(res) if extra else res
 
     def select_like(self,
@@ -57,22 +48,16 @@ class BaseTable:
         if not kwargs:
             return
         sql = f'update {self.name}'
-        data_dict = entity.dict()
-        if entity:
-            sql += ' set'
-            for key in data_dict:
-                if data_dict[key] or data_dict[key] == 0:
-                    sql += f' {key}=%({key})s,'
-            sql = sql.rstrip(',')
-        sql = parse_sql(sql, kwargs)
-        _, row_id = execute(sql, {**data_dict, **kwargs})
+        sql, query_dict = parse_sql_update(sql, entity)
+        sql = parse_sql_where(sql, kwargs)
+        _, row_id = execute(sql, {**query_dict, **kwargs})
         return row_id
 
     def delete(self, **kwargs):
         if not kwargs:
             return
         sql = f'delete from {self.name}'
-        sql = parse_sql(sql, kwargs)
+        sql = parse_sql_where(sql, kwargs)
         return execute(sql, kwargs)
 
     def insert(self, data) -> int:

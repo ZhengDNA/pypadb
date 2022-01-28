@@ -3,6 +3,7 @@ from typing import Any
 from pydantic import BaseModel
 
 import connection_pool
+from utils.conditions import Limit
 from utils.enums import QueryModeEnum
 
 
@@ -42,3 +43,24 @@ def parse_sql_batch(columns: list, data_list: list) -> tuple[str, dict]:
             query_sql += f'%({item}{i})s,'
         query_sql = query_sql.rstrip(',') + '),'
     return query_sql.rstrip(','), query_dict
+
+
+def parse_sql_where(sql: str, conditions: dict, limit: Limit = None) -> str:
+    if conditions:
+        sql += ' where'
+        for key in conditions:
+            sql += f' {key}=%({key})s and'
+    sql = sql.rstrip(' and')
+    return sql + str(limit) if limit else sql
+
+
+def parse_sql_update(sql, entity) -> tuple[str, dict]:
+    data_dict = entity.dict()
+    query_dict: dict = {}
+    salt = '_a_salt_that_never_duplicate'
+    sql += ' set'
+    for key in data_dict:
+        if data_dict[key] or data_dict[key] == 0:
+            sql += f' {key}=%({key}{salt})s,'
+            query_dict[f'{key}{salt}'] = data_dict[key]
+    return sql.rstrip(','), query_dict
