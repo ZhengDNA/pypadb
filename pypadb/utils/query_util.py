@@ -2,13 +2,13 @@ from typing import Any
 
 from pydantic import BaseModel
 
-import connection_pool
-from utils.conditions import Limit
-from utils.enums import QueryModeEnum
+from ..connection_pool import cursor_type, connection
+from ..utils.conditions import Limit
+from ..utils.enums import QueryModeEnum
 
 
 def query(sql: str, kwargs: dict, data_type: Any, model: QueryModeEnum):
-    result_set, last_row_id = execute(sql, kwargs, connection_pool.cursor_type())
+    result_set, last_row_id = execute(sql, kwargs, cursor_type())
     if result_set is None:
         return None
 
@@ -22,7 +22,7 @@ def execute(sql: str, kwargs: dict = None, cursor_type=None) -> tuple[list, int]
     conn: Any
     cur: Any
     try:
-        conn = connection_pool.connection()
+        conn = connection()
         cur = conn.cursor(cursor_type) if cursor_type else conn.cursor()
         cur.execute(sql, kwargs)
         return cur.fetchall(), cur.lastrowid

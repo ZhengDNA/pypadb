@@ -2,7 +2,7 @@ import functools
 import re
 from typing import Callable
 
-from utils.query_util import execute, parse_sql_batch
+from ..utils.query_util import execute, parse_sql_batch
 
 
 def insert(sql: str) -> Callable:

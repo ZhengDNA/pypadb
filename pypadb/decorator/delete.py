@@ -1,7 +1,7 @@
 import functools
 
-from utils import inspect_util
-from utils.query_util import execute
+from ..utils import inspect_util
+from ..utils.query_util import execute
 
 
 def delete(sql: str):

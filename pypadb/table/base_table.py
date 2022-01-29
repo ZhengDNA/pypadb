@@ -1,8 +1,8 @@
 from typing import Any, Union
 
-from utils.conditions import Limit, Like
-from utils.enums import QueryModeEnum
-from utils.query_util import query, execute, parse_sql_batch, parse_sql_where, parse_sql_update
+from ..utils.conditions import Limit, Like
+from ..utils.enums import QueryModeEnum
+from ..utils.query_util import query, execute, parse_sql_batch, parse_sql_where, parse_sql_update
 
 
 class BaseTable:

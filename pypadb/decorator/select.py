@@ -2,9 +2,9 @@ import functools
 from types import GenericAlias
 from typing import Callable, Any
 
-import connection_pool
-from exception import RequireReturnTypeAnnotation
-from utils import inspect_util
+from ..connection_pool import cursor_type, connection
+from ..exception import RequireReturnTypeAnnotation
+from ..utils import inspect_util
 
 
 def select(sql: str, data_type: Any) -> Callable:
@@ -14,8 +14,8 @@ def select(sql: str, data_type: Any) -> Callable:
             cur: Any
             conn: Any
             try:
-                conn = connection_pool.connection()
-                cur = conn.cursor(connection_pool.cursor_type())
+                conn = connection()
+                cur = conn.cursor(cursor_type())
                 cur.execute(sql, dict(zip([a.name for a in inspect_util.arg_list(fun)], args)))
                 func_returns = inspect_util.returns_type(fun)
 

@@ -1,7 +1,7 @@
 import abc
 from typing import Any
 
-from utils.enums import LikeEnum, QueryModeEnum
+from ..utils.enums import LikeEnum, QueryModeEnum
 
 
 class Limit:

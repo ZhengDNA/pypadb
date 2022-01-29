@@ -3,7 +3,7 @@ from typing import Any, Optional
 
 from pydantic import BaseModel
 
-from exception import NotCallable
+from ..exception import NotCallable
 
 
 class Argument(BaseModel):
