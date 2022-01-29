@@ -1,4 +1,4 @@
-from table.base_table import BaseTable
+from ..table.base_table import BaseTable
 
 
 class TableConfigurer:

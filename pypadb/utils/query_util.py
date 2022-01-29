@@ -1,7 +1,5 @@
 from typing import Any
 
-from pydantic import BaseModel
-
 from ..connection_pool import cursor_type, connection
 from ..utils.conditions import Limit
 from ..utils.enums import QueryModeEnum

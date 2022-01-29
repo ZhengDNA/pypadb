@@ -1,6 +1,6 @@
 import pymysql
 
-import connection_pool
+from ..connection_pool import _init_pool
 
 
 class DbConfigurer():
@@ -23,7 +23,7 @@ class DbConfigurer():
     }
 
     def end(self) -> None:
-        connection_pool._init_pool(**self.__data)
+        _init_pool(**self.__data)
 
     def set_creator(self, creator) -> 'DbConfigurer':
         self.__data['creator'] = creator
