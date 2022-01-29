@@ -8,6 +8,7 @@ def delete(sql: str):
     def deco(fun):
         @functools.wraps(fun)
         def wrapper(*args):
+            fun()
             execute(sql, dict(zip([a.name for a in inspect_util.arg_list(fun)], args)))
 
         return wrapper
