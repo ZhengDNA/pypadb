@@ -2,7 +2,7 @@ from typing import Union
 
 from dbutils.pooled_db import PooledDB, PooledDedicatedDBConnection, PooledSharedDBConnection
 
-import exception
+from ..exception import PoolUninitializedException
 
 _POOL: PooledDB = None
 _Cursor = None
@@ -16,7 +16,7 @@ def _init_pool(cursor, **data: dict):
 
 def connection() -> Union[PooledSharedDBConnection, PooledDedicatedDBConnection]:
     if not _POOL:
-        raise exception.PoolUninitializedException('connection pool uninitialized')
+        raise PoolUninitializedException('connection pool uninitialized')
     return _POOL.connection()
 
 
