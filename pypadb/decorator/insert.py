@@ -14,6 +14,7 @@ def insert(sql: str) -> Callable:
         def wrapper(data):
             in_sql = sql
             if not isinstance(data, list):
+                fun(data)
                 template_sql = '('
                 for arg in arg_list:
                     template_sql += f'%({arg})s,'
@@ -21,6 +22,8 @@ def insert(sql: str) -> Callable:
                 _, row_id = execute(in_sql + template_sql, data.dict())
                 return row_id
 
+            for i in data:
+                fun(i)
             parse_res, query_dict = parse_sql_batch(arg_list, data)
 
             _, row_id = execute(in_sql + parse_res, query_dict)
