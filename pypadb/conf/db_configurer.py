@@ -1,6 +1,6 @@
 import pymysql
 
-from ..connection_pool import _init_pool
+from pypadb.connection_pool import _init_pool
 
 
 class DbConfigurer():
