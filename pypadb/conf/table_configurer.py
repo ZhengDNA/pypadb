@@ -16,7 +16,7 @@ class TableConfigurer:
         return self.tables[item]
 
     def init_tables(self, **kwargs):
-        self.tables = {**self.tables, **kwargs}
+        self.tables = {**self.tables, **{key: BaseTable(key, kwargs[key]) for key in kwargs}}
 
 
 tables: TableConfigurer = TableConfigurer()
