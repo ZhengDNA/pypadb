@@ -17,10 +17,17 @@ class TableConfigurer:
     def __getitem__(self, item: str) -> BaseTable:
         return self.tables[item]
 
-    def init_tables(self, module_=None, **kwargs):
+    def init_tables(self, module_=None, escape_upper: bool = False, **kwargs):
         if inspect.ismodule(module_):
-            self.tables = {**self.tables, **{kv[0].lower(): BaseTable(kv[0].lower(), kv[1]) for kv in
-                                             inspect.getmembers(__import__('entities')) if not kv[0].startswith('_')}}
+            module_dict: dict = {}
+            for i in inspect.getmembers(__import__('entities')):
+                member_name = ''
+                for ch in i[0]:
+                    if ch.isupper() and not escape_upper:
+                        member_name += '_'
+                    member_name += ch.lower()
+                module_dict[member_name] = i[1]
+            self.tables = {**self.tables, **{key: BaseTable(key, module_dict[key]) for key in module_dict}}
         if kwargs:
             self.tables = {**self.tables, **{key: BaseTable(key, kwargs[key]) for key in kwargs}}
 

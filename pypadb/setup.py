@@ -9,7 +9,7 @@ with open("README.md", "r", encoding='utf-8') as fh:
     long_description = fh.read()
 
 setup(name="pypadb",
-      version="0.1.0",
+      version="0.1.1",
       description='Interaction with database in a simple way',
       author="ChenzDNA",
       author_email='1007324849@qq.com',
