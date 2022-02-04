@@ -21,8 +21,8 @@ class TableConfigurer:
         if inspect.ismodule(module_):
             module_dict: dict = {}
             for i in inspect.getmembers(__import__('entities')):
-                member_name = ''
-                for ch in i[0]:
+                member_name = i[0][0]
+                for ch in i[0][1:]:
                     if ch.isupper() and not escape_upper:
                         member_name += '_'
                     member_name += ch.lower()
