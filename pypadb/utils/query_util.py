@@ -17,17 +17,11 @@ def query(sql: str, kwargs: dict, data_type: Any, model: QueryModeEnum):
 
 
 def execute(sql: str, kwargs: dict = None, cursor_type=None) -> tuple[list, int]:
-    conn: Any
-    cur: Any
-    try:
-        conn = connection()
+    conn = connection()
+    with conn:
         cur = conn.cursor(cursor_type) if cursor_type else conn.cursor()
         cur.execute(sql, kwargs)
         return cur.fetchall(), cur.lastrowid
-    finally:
-        conn.commit()
-        conn.close()
-        cur.close()
 
 
 def parse_sql_batch(columns: list, data_list: list) -> tuple[str, dict]:

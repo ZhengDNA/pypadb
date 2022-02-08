@@ -11,10 +11,8 @@ def select(sql: str, data_type: Any) -> Callable:
     def deco(fun: Callable):
         @functools.wraps(fun)
         def wrapper(*args):
-            cur: Any
-            conn: Any
-            try:
-                conn = connection()
+            conn = connection()
+            with conn:
                 cur = conn.cursor(cursor_type())
                 cur.execute(sql, dict(zip([a.name for a in inspect_util.arg_list(fun)], args)))
                 func_returns = inspect_util.returns_type(fun)
@@ -30,10 +28,6 @@ def select(sql: str, data_type: Any) -> Callable:
                     return [data_type(**first_data), *[data_type(**i) for i in cur.fetchall()]]
                 else:
                     return data_type(**first_data)
-            finally:
-                conn.commit()
-                cur.close()
-                conn.close()
 
         return wrapper
 
