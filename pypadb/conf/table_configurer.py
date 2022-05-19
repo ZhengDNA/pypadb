@@ -1,6 +1,7 @@
 import inspect
 
 from pypadb.table.base_table import BaseTable
+from utils.inspect_util import camel2snake
 
 
 class TableConfigurer:
@@ -20,12 +21,12 @@ class TableConfigurer:
     def init_tables(self, module_=None, escape_upper: bool = False, **kwargs):
         if inspect.ismodule(module_):
             module_dict: dict = {}
-            for i in inspect.getmembers(__import__('entities')):
-                member_name = i[0][0].lower()
-                for ch in i[0][1:]:
-                    if ch.isupper() and not escape_upper:
-                        member_name += '_'
-                    member_name += ch.lower()
+            module_member = inspect.getmembers(module_)
+            magic_all = [i[1] for i in module_member if i[0] == '__all__']
+            if magic_all:
+                module_member = [i for i in module_member if i[0] in magic_all]
+            for i in module_member:
+                member_name = camel2snake(i[0])
                 module_dict[member_name] = i[1]
             self.tables = {**self.tables, **{key: BaseTable(key, module_dict[key]) for key in module_dict}}
         if kwargs:

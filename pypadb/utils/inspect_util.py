@@ -24,3 +24,12 @@ def arg_list(fun) -> list[Argument]:
 def returns_type(fun) -> type:
     a = inspect.signature(fun).return_annotation
     return a if a != inspect._empty else None
+
+
+def camel2snake(source: str):
+    res = source[0].lower()
+    for i in source[1:]:
+        if i.isupper():
+            res += '_'
+        res += i.lower()
+    return res
