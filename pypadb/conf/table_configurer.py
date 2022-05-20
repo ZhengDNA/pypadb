@@ -1,7 +1,7 @@
 import inspect
 
 from pypadb.table.base_table import BaseTable
-from utils.inspect_util import camel2snake
+from pypadb.utils.inspect_util import camel2snake
 
 
 class TableConfigurer:
