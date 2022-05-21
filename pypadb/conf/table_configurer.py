@@ -22,7 +22,7 @@ class TableConfigurer:
         if inspect.ismodule(module_):
             module_dict: dict = {}
             module_member = inspect.getmembers(module_)
-            magic_all = [i[1] for i in module_member if i[0] == '__all__']
+            magic_all = [i[1] for i in module_member if i[0] == '__all__'][0]
             if magic_all:
                 module_member = [i for i in module_member if i[0] in magic_all]
             for i in module_member:
