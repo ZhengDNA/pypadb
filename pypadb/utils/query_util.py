@@ -21,6 +21,7 @@ def execute(sql: str, kwargs: dict = None, cursor_type=None) -> tuple[list, int]
     with conn:
         cur = conn.cursor(cursor_type) if cursor_type else conn.cursor()
         cur.execute(sql, kwargs)
+        conn.commit()
         return cur.fetchall(), cur.lastrowid
 
 
