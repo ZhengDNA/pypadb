@@ -1,6 +1,6 @@
 import functools
 
-from ..utils.query_util import parse_sql_where, parse_sql_update, execute
+from pypadb.utils.query_util import parse_sql_where, parse_sql_update, execute
 
 
 def update(sql: str):

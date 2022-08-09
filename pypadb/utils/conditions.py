@@ -1,7 +1,4 @@
-import abc
-from typing import Any
-
-from ..utils.enums import LikeEnum, QueryModeEnum
+from pypadb.utils.enums import LikeEnum, QueryModeEnum
 
 
 class Limit:
@@ -53,7 +50,7 @@ def extra(column: list, data_property: str, method):
         if isinstance(data_entity, list):
             for entity in data_entity:
                 entity.__setattr__(data_property,
-                                   method(**{column[1]: data_entity.__getattribute__(column[0])}))
+                                   method(**{column[1]: entity.__getattribute__(column[0])}))
             return data_entity
         data_entity.__setattr__(data_property,
                                 method(**{column[1]: data_entity.__getattribute__(column[0])}))

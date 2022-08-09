@@ -1,8 +1,8 @@
 from typing import Any
 
-from ..connection_pool import cursor_type, connection
-from ..utils.conditions import Limit
-from ..utils.enums import QueryModeEnum
+from pypadb.connection_pool import cursor_type, connection
+from pypadb.utils.conditions import Limit
+from pypadb.utils.enums import QueryModeEnum
 
 
 def query(sql: str, kwargs: dict, data_type: Any, model: QueryModeEnum):

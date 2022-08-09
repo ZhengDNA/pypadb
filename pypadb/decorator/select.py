@@ -2,9 +2,9 @@ import functools
 from types import GenericAlias
 from typing import Callable, Any
 
-from ..connection_pool import cursor_type, connection
-from ..exception import RequireReturnTypeAnnotation
-from ..utils import inspect_util
+from pypadb.connection_pool import cursor_type, connection
+from pypadb.exception import RequireReturnTypeAnnotation
+from pypadb.utils import inspect_util
 
 
 def select(sql: str, data_type: Any) -> Callable:
