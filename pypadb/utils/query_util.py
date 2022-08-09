@@ -43,7 +43,7 @@ def parse_sql_where(sql: str, conditions: dict, limit: Limit = None) -> str:
         sql += ' where'
         for key in conditions:
             sql += f' {key}=%({key})s and'
-    sql = sql.rstrip(' and')
+        sql = sql.rstrip(' and')
     return sql + str(limit) if limit else sql
 
 
