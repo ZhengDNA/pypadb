@@ -2,7 +2,7 @@
 
 目前支持了 MySQL
 
-[使用文档](https://chenzdna.github.io/tag/pypadb)
+[使用文档](http://www.chenz.icu/tag/pypadb/)
 
 ### install
 
