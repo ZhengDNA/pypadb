@@ -1,6 +1,6 @@
 import functools
 import re
-from typing import Callable
+from typing import Callable, List
 
 from pypadb.utils.query_util import execute, parse_sql_batch
 
@@ -13,7 +13,7 @@ def insert(sql: str) -> Callable:
         @functools.wraps(fun)
         def wrapper(data):
             in_sql = sql
-            if not isinstance(data, list):
+            if not isinstance(data, List):
                 fun(data)
                 template_sql = '('
                 for arg in arg_list:

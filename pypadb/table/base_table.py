@@ -1,4 +1,4 @@
-from typing import Any, Union
+from typing import Any, Union, List
 
 from ..utils.conditions import Limit, Like
 from ..utils.enums import QueryModeEnum
@@ -21,19 +21,19 @@ class BaseTable:
         res, _ = query(parse_sql_where(self.base_select_sql, kwargs), kwargs, self.data_type, QueryModeEnum.One)
         return extra(res) if extra else res
 
-    def select_many(self, limit: Limit = None, extra=None, **kwargs) -> list:
+    def select_many(self, limit: Limit = None, extra=None, **kwargs) -> List:
         res, _ = query(parse_sql_where(self.base_select_sql, kwargs, limit), kwargs, self.data_type, QueryModeEnum.Many)
         return extra(res) if extra else res
 
     def select_like(self,
-                    likes: Union[list[Like], Like] = {},
+                    likes: Union[List[Like], Like] = {},
                     limit: Limit = None,
-                    extra=None) -> list:
+                    extra=None) -> List:
         sql: str = self.base_select_sql
         data_dict: dict = {}
         if likes:
             sql += ' where'
-            if isinstance(likes, list):
+            if isinstance(likes, List):
                 for like in likes:
                     sql += f'{like} and'
                     data_dict[like.column] = like.value
@@ -73,10 +73,10 @@ class BaseTable:
         _, row_id = execute(sql, data_dict)
         return row_id
 
-    def insert_batch(self, data: list) -> int:
+    def insert_batch(self, data: List) -> int:
         sql = f'insert into {self.name}('
         data_dict: dict = data[0].dict()
-        columns: list = []
+        columns: List = []
         for key in data_dict:
             if data_dict[key] or data_dict[key] == 0:
                 sql += f' {key}, '

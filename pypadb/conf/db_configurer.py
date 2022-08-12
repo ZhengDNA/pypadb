@@ -1,3 +1,5 @@
+from typing import List
+
 import pymysql
 
 from pypadb.connection_pool import _init_pool
@@ -49,7 +51,7 @@ class DbConfigurer():
         self.__data['creator'] = maxusage
         return self
 
-    def set_setsession(self, setsession: list[str]) -> 'DbConfigurer':
+    def set_setsession(self, setsession: List[str]) -> 'DbConfigurer':
         self.__data['setsession'] = setsession
         return self
 

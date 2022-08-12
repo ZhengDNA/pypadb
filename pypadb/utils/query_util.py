@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, List, Tuple
 
 from pypadb.connection_pool import cursor_type, connection
 from pypadb.utils.conditions import Limit
@@ -16,7 +16,7 @@ def query(sql: str, kwargs: dict, data_type: Any, model: QueryModeEnum):
         return [data_type(**i) for i in result_set], last_row_id
 
 
-def execute(sql: str, kwargs: dict = None, cursor_type=None) -> tuple[list, int]:
+def execute(sql: str, kwargs: dict = None, cursor_type=None) -> Tuple[List, int]:
     conn = connection()
     with conn:
         cur = conn.cursor(cursor_type) if cursor_type else conn.cursor()
@@ -25,7 +25,7 @@ def execute(sql: str, kwargs: dict = None, cursor_type=None) -> tuple[list, int]
         return cur.fetchall(), cur.lastrowid
 
 
-def parse_sql_batch(columns: list, data_list: list) -> tuple[str, dict]:
+def parse_sql_batch(columns: List, data_list: List) -> Tuple[str, dict]:
     query_dict: dict = {}
     query_sql: str = ''
     for i, v in enumerate(data_list):
@@ -47,7 +47,7 @@ def parse_sql_where(sql: str, conditions: dict, limit: Limit = None) -> str:
     return sql + str(limit) if limit else sql
 
 
-def parse_sql_update(sql, entity) -> tuple[str, dict]:
+def parse_sql_update(sql, entity) -> Tuple[str, dict]:
     data_dict = entity.dict()
     query_dict: dict = {}
     salt = '_a_salt_that_never_duplicate'

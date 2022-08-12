@@ -1,3 +1,5 @@
+from typing import List
+
 from pypadb.utils.enums import LikeEnum, QueryModeEnum
 
 
@@ -39,7 +41,7 @@ class Like:
         return self.sql
 
 
-def extra(column: list, data_property: str, method):
+def extra(column: List, data_property: str, method):
     """
     :param column: table A[column[0]] mapping table B[column[1]]
     :param data_property: table A property name
@@ -47,7 +49,7 @@ def extra(column: list, data_property: str, method):
     """
 
     def e(data_entity):
-        if isinstance(data_entity, list):
+        if isinstance(data_entity, List):
             for entity in data_entity:
                 entity.__setattr__(data_property,
                                    method(**{column[1]: entity.__getattribute__(column[0])}))

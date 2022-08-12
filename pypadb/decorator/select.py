@@ -1,6 +1,5 @@
 import functools
-from types import GenericAlias
-from typing import Callable, Any
+from typing import Callable, Any, List
 
 from pypadb.connection_pool import cursor_type, connection
 from pypadb.exception import RequireReturnTypeAnnotation
@@ -24,7 +23,7 @@ def select(sql: str, data_type: Any) -> Callable:
                 if first_data is None:
                     return None
 
-                if func_returns == GenericAlias(list, data_type):
+                if func_returns == List[data_type]:
                     return [data_type(**first_data), *[data_type(**i) for i in cur.fetchall()]]
                 else:
                     return data_type(**first_data)

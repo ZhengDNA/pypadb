@@ -1,5 +1,5 @@
 import inspect
-from typing import Any, Optional
+from typing import Any, Optional, List
 
 from pydantic import BaseModel
 
@@ -12,7 +12,7 @@ class Argument(BaseModel):
     default: Any
 
 
-def arg_list(fun) -> list[Argument]:
+def arg_list(fun) -> List[Argument]:
     if not callable(fun):
         raise NotCallable(fun)
     return [Argument(name=tp[0],
