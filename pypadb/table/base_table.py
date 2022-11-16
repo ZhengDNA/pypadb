@@ -1,5 +1,8 @@
 from typing import Union, List
 
+from pydantic import BaseModel
+from pymysql.cursors import Cursor
+
 from ..utils.conditions import Limit, Like
 from ..utils.enums import QueryModeEnum
 from ..utils.query_util import query, execute, parse_sql_batch, parse_sql_where, parse_sql_update
@@ -83,3 +86,11 @@ class BaseTable:
 
         _, row_id = execute(sql + parse_res, query_dict)
         return row_id
+
+    def count(self, column: str = '*', **kwargs) -> int:
+        sql = parse_sql_where(f'select count({column}) as count from {self.name}', kwargs)
+
+        class Count(BaseModel):
+            count: int
+
+        return query(sql, kwargs, data_type=Count, mode=QueryModeEnum.One)[0].count
