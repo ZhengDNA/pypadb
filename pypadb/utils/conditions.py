@@ -6,9 +6,6 @@ from pypadb.utils.enums import LikeEnum, QueryModeEnum
 class Limit:
     __slots__ = ['start', 'count']
 
-    start: int
-    count: int
-
     def __init__(self, start: int, count: int = None):
         self.start = start
         self.count = count
@@ -21,10 +18,6 @@ class Limit:
 
 class Like:
     __slots__ = ['sql', 'value', 'column']
-
-    sql: str
-    column: str
-    value: str
 
     def __init__(self, column: str, value, like_type: LikeEnum):
         self.column = column

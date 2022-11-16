@@ -5,14 +5,14 @@ from pypadb.utils.conditions import Limit
 from pypadb.utils.enums import QueryModeEnum
 
 
-def query(sql: str, kwargs: dict, data_type: Any, model: QueryModeEnum) -> Tuple[Any, int]:
+def query(sql: str, kwargs: dict, data_type: Any, mode: QueryModeEnum) -> Tuple[Any, int]:
     result_set, last_row_id = execute(sql, kwargs, cursor_type())
     if result_set is None or len(result_set) == 0:
         return None, 0
 
-    if model == QueryModeEnum.One:
+    if mode == QueryModeEnum.One:
         return data_type(**result_set[0]), last_row_id
-    elif model == QueryModeEnum.Many:
+    elif mode == QueryModeEnum.Many:
         return [data_type(**i) for i in result_set], last_row_id
 
 

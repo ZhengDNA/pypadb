@@ -1,13 +1,10 @@
 import inspect
-from typing import Dict
 
 from pypadb.table.base_table import BaseTable
 from pypadb.utils.inspect_util import camel2snake
 
 
 class TableConfig:
-
-    _tables: Dict[str, BaseTable]
 
     def __init__(self):
         self._tables = {}
