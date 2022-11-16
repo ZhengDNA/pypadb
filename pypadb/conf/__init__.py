@@ -1,2 +1,2 @@
-from .db import db_config
-from . import table
+from .db import db_config, DbConfig
+from .table import table_pool, TableConfig
