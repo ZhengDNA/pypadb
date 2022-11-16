@@ -5,7 +5,7 @@ from pypadb.table.base_table import BaseTable
 from pypadb.utils.inspect_util import camel2snake
 
 
-class TableConfigurer:
+class TableConfig:
 
     _tables: Dict[str, BaseTable]
 
@@ -33,4 +33,4 @@ class TableConfigurer:
             self._tables = {**self._tables, **{key: BaseTable(key, kwargs[key]) for key in kwargs}}
 
 
-tables: TableConfigurer = TableConfigurer()
+table_pool: TableConfig = TableConfig()

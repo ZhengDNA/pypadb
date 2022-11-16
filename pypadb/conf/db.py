@@ -5,7 +5,7 @@ import pymysql
 from pypadb.connection_pool import _init_pool
 
 
-class DbConfigurer():
+class DbConfig:
     __data: dict = {
         "creator": pymysql,
         "maxconnections": 6,
@@ -84,4 +84,4 @@ class DbConfigurer():
         return self
 
 
-db_configurer: DbConfigurer = DbConfigurer()
+db_config: DbConfig = DbConfig()

@@ -1,4 +1,4 @@
-from typing import Any, Union, List
+from typing import Union, List
 
 from ..utils.conditions import Limit, Like
 from ..utils.enums import QueryModeEnum
@@ -7,10 +7,6 @@ from ..utils.query_util import query, execute, parse_sql_batch, parse_sql_where,
 
 class BaseTable:
     __slots__ = ['name', 'data_type', 'base_select_sql']
-
-    name: str
-    data_type: Any
-    base_select_sql: str
 
     def __init__(self, name: str, data_type):
         self.name = name
@@ -26,7 +22,7 @@ class BaseTable:
         return extra(res) if extra else res
 
     def select_like(self,
-                    likes: Union[List[Like], Like] = {},
+                    likes: Union[List[Like], Like] = None,
                     limit: Limit = None,
                     extra=None) -> List:
         sql: str = self.base_select_sql
