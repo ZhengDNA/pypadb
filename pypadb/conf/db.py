@@ -27,59 +27,59 @@ class DbConfig:
     def end(self) -> None:
         _init_pool(**self.__data)
 
-    def set_creator(self, creator) -> 'DbConfigurer':
+    def set_creator(self, creator) -> 'DbConfig':
         self.__data['creator'] = creator
         return self
 
-    def set_maxconnections(self, maxconnections: int) -> 'DbConfigurer':
+    def set_maxconnections(self, maxconnections: int) -> 'DbConfig':
         self.__data['maxconnections'] = maxconnections
         return self
 
-    def set_mincached(self, mincached: int) -> 'DbConfigurer':
+    def set_mincached(self, mincached: int) -> 'DbConfig':
         self.__data['mincached'] = mincached
         return self
 
-    def set_maxcached(self, maxcached: int) -> 'DbConfigurer':
+    def set_maxcached(self, maxcached: int) -> 'DbConfig':
         self.__data['maxcached'] = maxcached
         return self
 
-    def set_blocking(self, blocking: bool) -> 'DbConfigurer':
+    def set_blocking(self, blocking: bool) -> 'DbConfig':
         self.__data['blocking'] = blocking
         return self
 
-    def set_maxusage(self, maxusage: int) -> 'DbConfigurer':
+    def set_maxusage(self, maxusage: int) -> 'DbConfig':
         self.__data['creator'] = maxusage
         return self
 
-    def set_setsession(self, setsession: List[str]) -> 'DbConfigurer':
+    def set_setsession(self, setsession: List[str]) -> 'DbConfig':
         self.__data['setsession'] = setsession
         return self
 
-    def set_host(self, host: str) -> 'DbConfigurer':
+    def set_host(self, host: str) -> 'DbConfig':
         self.__data['host'] = host
         return self
 
-    def set_port(self, port: int) -> 'DbConfigurer':
+    def set_port(self, port: int) -> 'DbConfig':
         self.__data['port'] = port
         return self
 
-    def set_user(self, user: str) -> 'DbConfigurer':
+    def set_user(self, user: str) -> 'DbConfig':
         self.__data['user'] = user
         return self
 
-    def set_password(self, password: str) -> 'DbConfigurer':
+    def set_password(self, password: str) -> 'DbConfig':
         self.__data['password'] = password
         return self
 
-    def set_database(self, database: str) -> 'DbConfigurer':
+    def set_database(self, database: str) -> 'DbConfig':
         self.__data['database'] = database
         return self
 
-    def set_charset(self, charset: str) -> 'DbConfigurer':
+    def set_charset(self, charset: str) -> 'DbConfig':
         self.__data['charset'] = charset
         return self
 
-    def set_cursor(self, cursor) -> 'DbConfigurer':
+    def set_cursor(self, cursor) -> 'DbConfig':
         self.__data['cursor'] = cursor
         return self
 
